@@ -14,12 +14,12 @@ public class DemoController {
         return "Hello, World!";
     }
 
-    @GetMapping("admin")
+    @GetMapping("/admin")
     public String admin() {
         return "Hello, Admin!";
     }
 
-    @GetMapping("user")
+    @GetMapping("/user")
     public String user() {
         return "Hello, User!";
     }
