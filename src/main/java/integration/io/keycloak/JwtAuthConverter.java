@@ -3,6 +3,7 @@ package integration.io.keycloak;
 
 import jakarta.annotation.Nonnull;
 import lombok.NonNull;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -24,7 +25,10 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
 
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter
             = new JwtGrantedAuthoritiesConverter();
-    private final String principleAttribute = "preferred_username";
+    @Value("${jwt.auth.converter.principle-attribute}")
+    private  String principleAttribute ;
+    @Value("${jwt.auth.converter.resource-id}")
+    private  String resourceId ;
 
     @Override
     public AbstractAuthenticationToken convert(@NonNull Jwt jwt) {
@@ -55,10 +59,11 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
             return Set.of();
         }
         resourceAccess = jwt.getClaim("resource_access");
-        if (resourceAccess.get("ahmed-rest-api")== null){
+        if (resourceAccess.get(resourceId)== null){
             return Set.of();
         }
-        resource = (Map<String, Object>) resourceAccess.get("ahmed-rest-api");
+        resource = (Map<String, Object>) resourceAccess.get(resourceId);
+
         resourceRoles = (Collection<String>) resource.get("roles");
 
         return resourceRoles.stream().map(
