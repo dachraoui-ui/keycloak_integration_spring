@@ -49,6 +49,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
         }
         return jwt.getClaim(claimName);
     }
+    // extractResourceRoles() method extracts the roles from the resource_access claim in the JWT.
 
     private Collection<? extends GrantedAuthority> extractResourceRoles( Jwt jwt) {
         Map<String,Object> resourceAccess;
