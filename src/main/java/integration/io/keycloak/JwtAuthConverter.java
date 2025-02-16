@@ -1,7 +1,6 @@
 package integration.io.keycloak;
 
 
-import jakarta.annotation.Nonnull;
 import lombok.NonNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.convert.converter.Converter;
@@ -42,6 +41,7 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
                         getPrincipleClaimName(jwt));
     }
 
+    //
     private String getPrincipleClaimName(Jwt jwt) {
         String claimName = JwtClaimNames.SUB;
         if (principleAttribute!= null){
