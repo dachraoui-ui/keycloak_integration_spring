@@ -7,7 +7,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
@@ -26,6 +25,7 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())
                 //Disabling CSRF (csrf.disable()) is safe only for APIs (RESTful services), where the client is a mobile app or a frontend like React/Angular
+
                 .authorizeHttpRequests(auth -> auth.anyRequest().authenticated());
         //anyRequest().authenticated() means:
         //Every request must come from an authenticated user (e.g., user must be logged in).
